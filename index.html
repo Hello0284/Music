@@ -97,11 +97,38 @@
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
+    // ✅ Debug logs for testing
+    recognition.onstart = () => console.log("🎙️ Recognition started");
+    recognition.onaudiostart = () => console.log("🔊 Audio started");
+    recognition.onend = () => console.log("🛑 Recognition ended");
+    recognition.onerror = (e) => {
+      console.log("❗ Recognition error:", e.error);
+      status.textContent = "Error: " + e.error;
+    };
+
     button.onclick = () => {
       status.textContent = "Listening...";
+      console.log("🎧 Button clicked, starting recognition...");
       recognition.start();
     };
 
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript.toLowerCase();
-      status.textContent = `Heard: "${trans
+      console.log("🗣️ Heard:", transcript);
+      status.textContent = `Heard: "${transcript}"`;
+      const url = phrases[transcript];
+      if (url) {
+        status.textContent = `Launching: ${transcript}`;
+        setTimeout(() => window.location.href = url, 1000);
+      } else {
+        status.textContent = "❌ Access Denied!";
+        failSound.play();
+      }
+    };
+
+    window.addEventListener("load", () => {
+      bootSound.play();
+    });
+  </script>
+</body>
+</html>
