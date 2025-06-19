@@ -44,17 +44,18 @@
     }
 
     #listenBtn::before {
-      content: '';
-      position: absolute;
-      top: -10px;
-      left: -10px;
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      background: rgba(255, 0, 51, 0.1);
-      box-shadow: 0 0 30px #ff0033;
-      animation: pulse 2s infinite;
-      z-index: -1;
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  height: 150px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(255, 0, 51, 0.1);
+  box-shadow: 0 0 30px #ff0033;
+  animation: pulse 2s infinite;
+  z-index: -1;
     }
 
     @keyframes pulse {
