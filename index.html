@@ -114,10 +114,10 @@ h1 {
       status.textContent = `Heard: "${transcript}"`;
       if (phrases[transcript]) {
         setTimeout(() => window.location.href = phrases[transcript], 500);
-      } else if (transcript === "bravo six going dark") {
+      } else if (transcript.includes("bravo six") || transcript.includes("going dark")) {
         setDarkMode();
         status.textContent = "⚫ Dark mode engaged.";
-      } else if (transcript === "let there be light") {
+      } else if (transcript.includes("let there be light")) {
         setLightMode();
         status.textContent = "🔵 Light mode engaged.";
       } else {
