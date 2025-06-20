@@ -1,85 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>J.A.R.V.I.S. Voice Launcher</title>
   <style>
-    body {
-      margin: 0;
-      background: radial-gradient(#0d0d0d, #000000);
-      color: #ff0033;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      overflow: hidden;
-    }
+    :root {
+      --bg-color: radial-gradient(#0d0d0d, #000000);
+      --text-color: #ff0033;
+      --shadow-color: #ff0033;
+      --btn-border: #ff0033;
+      --pulse-glow: rgba(255, 0, 51, 0.1);
+    }body {
+  margin: 0;
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
 
-    h1 {
-      font-size: 2.5em;
-      text-shadow: 0 0 10px #ff0033, 0 0 20px #ff0033;
-      animation: flicker 1.5s infinite alternate;
-      text-align: center;
-    }
+h1 {
+  font-size: 2.5em;
+  text-shadow: 0 0 10px var(--shadow-color), 0 0 20px var(--shadow-color);
+  animation: flicker 1.5s infinite alternate;
+  text-align: center;
+}
 
-    @keyframes flicker {
-      0% { opacity: 1; }
-      50% { opacity: 0.85; text-shadow: 0 0 5px #ff0033; }
-      100% { opacity: 1; text-shadow: 0 0 20px #ff0033; }
-    }
+@keyframes flicker {
+  0% { opacity: 1; }
+  50% { opacity: 0.85; text-shadow: 0 0 5px var(--shadow-color); }
+  100% { opacity: 1; text-shadow: 0 0 20px var(--shadow-color); }
+}
 
-    #listenBtn {
-      background: transparent;
-      border: 4px solid #ff0033;
-      border-radius: 50%;
-      color: #ff0033;
-      width: 130px;
-      height: 130px;
-      font-size: 1.1em;
-      position: relative;
-      cursor: pointer;
-      box-shadow: 0 0 20px #ff0033;
-    }
+#listenBtn {
+  background: transparent;
+  border: 4px solid var(--btn-border);
+  border-radius: 50%;
+  color: var(--btn-border);
+  width: 130px;
+  height: 130px;
+  font-size: 1.1em;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 0 20px var(--shadow-color);
+  transition: all 0.5s ease;
+}
 
-    #listenBtn::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 150px;
-      height: 150px;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      background: rgba(255, 0, 51, 0.1);
-      box-shadow: 0 0 30px #ff0033;
-      animation: pulse 2s infinite;
-      z-index: -1;
-    }
+#listenBtn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  height: 150px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--pulse-glow);
+  box-shadow: 0 0 30px var(--shadow-color);
+  animation: pulse 2s infinite;
+  z-index: -1;
+}
 
-    @keyframes pulse {
-      0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-      50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.2; }
-      100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-    }
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.2; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+}
 
-    #status {
-      margin-top: 20px;
-      color: #aaa;
-      font-size: 1em;
-    }
+#status {
+  margin-top: 20px;
+  color: #aaa;
+  font-size: 1em;
+}
+
   </style>
 </head>
 <body>
   <h1>🎙️ J.A.R.V.I.S. Launcher</h1>
   <button id="listenBtn">Speak</button>
-  <div id="status">Awaiting Command...</div>
-
-  <!-- Sound Effects -->
-  <audio id="failSound" src="https://www.orangefreesounds.com/wp-content/uploads/2014/08/Price-is-right-losing-horn.mp3" preload="auto"></audio>
-  <audio id="bootSound" src="https://assets.mixkit.co/sfx/preview/mixkit-robotic-power-up-948.mp3" preload="auto"></audio>
+  <div id="status">Awaiting Command...</div>  <!-- Sound Effects --><audio id="failSound" src="https://www.orangefreesounds.com/wp-content/uploads/2014/08/Price-is-right-losing-horn.mp3" preload="auto"></audio> <audio id="bootSound" src="https://assets.mixkit.co/sfx/preview/mixkit-robotic-power-up-948.mp3" preload="auto"></audio>
 
   <script>
     const phrases = {
@@ -108,11 +112,14 @@
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript.toLowerCase();
       status.textContent = `Heard: "${transcript}"`;
-      const url = phrases[transcript];
-      if (url) {
-        setTimeout(() => {
-          window.location.href = url;
-        }, 500);
+      if (phrases[transcript]) {
+        setTimeout(() => window.location.href = phrases[transcript], 500);
+      } else if (transcript === "bravo six going dark") {
+        setDarkMode();
+        status.textContent = "⚫ Dark mode engaged.";
+      } else if (transcript === "let there be light") {
+        setLightMode();
+        status.textContent = "🔵 Light mode engaged.";
       } else {
         failSound.play();
         status.textContent = "❌ Access Denied.";
@@ -122,6 +129,21 @@
     recognition.onerror = (event) => {
       status.textContent = `Error: ${event.error}`;
     };
-  </script>
-</body>
+
+    function setDarkMode() {
+      document.documentElement.style.setProperty('--bg-color', 'radial-gradient(#0d0d0d, #000000)');
+      document.documentElement.style.setProperty('--text-color', '#ff0033');
+      document.documentElement.style.setProperty('--shadow-color', '#ff0033');
+      document.documentElement.style.setProperty('--btn-border', '#ff0033');
+      document.documentElement.style.setProperty('--pulse-glow', 'rgba(255, 0, 51, 0.1)');
+    }
+
+    function setLightMode() {
+      document.documentElement.style.setProperty('--bg-color', 'radial-gradient(#ffffff, #e0e0e0)');
+      document.documentElement.style.setProperty('--text-color', '#007bff');
+      document.documentElement.style.setProperty('--shadow-color', '#007bff');
+      document.documentElement.style.setProperty('--btn-border', '#007bff');
+      document.documentElement.style.setProperty('--pulse-glow', 'rgba(0, 123, 255, 0.1)');
+    }
+  </script></body>
 </html>
