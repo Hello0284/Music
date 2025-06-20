@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-UTF">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>J.A.R.V.I.S. Voice Launcher</title>
   <style>
     body {
@@ -22,6 +22,7 @@
       font-size: 2.5em;
       text-shadow: 0 0 10px #ff0033, 0 0 20px #ff0033;
       animation: flicker 1.5s infinite alternate;
+      text-align: center;
     }
 
     @keyframes flicker {
@@ -76,15 +77,9 @@
   <button id="listenBtn">Speak</button>
   <div id="status">Awaiting Command...</div>
 
-  <!-- Audio Effects -->
+  <!-- Sound Effects -->
   <audio id="failSound" src="https://www.orangefreesounds.com/wp-content/uploads/2014/08/Price-is-right-losing-horn.mp3" preload="auto"></audio>
   <audio id="bootSound" src="https://assets.mixkit.co/sfx/preview/mixkit-robotic-power-up-948.mp3" preload="auto"></audio>
-
-  <!-- J.A.R.V.I.S. Voice Clips -->
-  <audio id="j1" src="https://tts.101soundboards.com/download/jua209njo6566/as_you_wish_sir.mp3" preload="auto"></audio>
-  <audio id="j2" src="https://tts.101soundboards.com/download/jua209njo6566/will_do_sir.mp3" preload="auto"></audio>
-  <audio id="j3" src="https://tts.101soundboards.com/download/jua209njo6566/very_well_sir.mp3" preload="auto"></audio>
-  <audio id="j4" src="https://tts.101soundboards.com/download/jua209njo6566/you_are_not_authorized_to_access_this_area.mp3" preload="auto"></audio>
 
   <script>
     const phrases = {
@@ -97,13 +92,6 @@
     const status = document.getElementById("status");
     const failSound = document.getElementById("failSound");
     const bootSound = document.getElementById("bootSound");
-
-    const jarvisSounds = {
-      "engage protocol 42": document.getElementById("j1"),
-      "activate house party protocol": document.getElementById("j2"),
-      "bring the noise": document.getElementById("j3"),
-      "unauthorized": document.getElementById("j4")
-    };
 
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
@@ -122,13 +110,11 @@
       status.textContent = `Heard: "${transcript}"`;
       const url = phrases[transcript];
       if (url) {
-        jarvisSounds[transcript].play();
         setTimeout(() => {
           window.location.href = url;
-        }, 1000);
+        }, 500);
       } else {
         failSound.play();
-        jarvisSounds["unauthorized"].play();
         status.textContent = "❌ Access Denied.";
       }
     };
