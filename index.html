@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Voice Launcher 2.0</title>
+  <meta charset="UTF-UTF">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>J.A.R.V.I.S. Voice Launcher</title>
   <style>
     body {
       margin: 0;
@@ -72,18 +72,19 @@
   </style>
 </head>
 <body>
-  <h1>🎙️ Voice Launcher 2.0</h1>
+  <h1>🎙️ J.A.R.V.I.S. Launcher</h1>
   <button id="listenBtn">Speak</button>
-  <div id="status">Say a phrase...</div>
+  <div id="status">Awaiting Command...</div>
 
-  <!-- Sound Effects -->
-  <audio id="failSound"
-    src="https://www.orangefreesounds.com/wp-content/uploads/2014/08/Price-is-right-losing-horn.mp3"
-    preload="auto"></audio>
+  <!-- Audio Effects -->
+  <audio id="failSound" src="https://www.orangefreesounds.com/wp-content/uploads/2014/08/Price-is-right-losing-horn.mp3" preload="auto"></audio>
+  <audio id="bootSound" src="https://assets.mixkit.co/sfx/preview/mixkit-robotic-power-up-948.mp3" preload="auto"></audio>
 
-  <audio id="bootSound"
-    src="https://assets.mixkit.co/sfx/preview/mixkit-robotic-power-up-948.mp3"
-    preload="auto"></audio>
+  <!-- J.A.R.V.I.S. Voice Clips -->
+  <audio id="j1" src="https://tts.101soundboards.com/download/jua209njo6566/as_you_wish_sir.mp3" preload="auto"></audio>
+  <audio id="j2" src="https://tts.101soundboards.com/download/jua209njo6566/will_do_sir.mp3" preload="auto"></audio>
+  <audio id="j3" src="https://tts.101soundboards.com/download/jua209njo6566/very_well_sir.mp3" preload="auto"></audio>
+  <audio id="j4" src="https://tts.101soundboards.com/download/jua209njo6566/you_are_not_authorized_to_access_this_area.mp3" preload="auto"></audio>
 
   <script>
     const phrases = {
@@ -97,40 +98,43 @@
     const failSound = document.getElementById("failSound");
     const bootSound = document.getElementById("bootSound");
 
+    const jarvisSounds = {
+      "engage protocol 42": document.getElementById("j1"),
+      "activate house party protocol": document.getElementById("j2"),
+      "bring the noise": document.getElementById("j3"),
+      "unauthorized": document.getElementById("j4")
+    };
+
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
     recognition.lang = "en-US";
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
-    // Debug logs
-    recognition.onstart = () => console.log("🎙️ Recognition started");
-    recognition.onaudiostart = () => console.log("🔊 Audio started");
-    recognition.onend = () => console.log("🛑 Recognition ended");
-    recognition.onerror = (e) => {
-      console.log("❗ Recognition error:", e.error);
-      status.textContent = "Error: " + e.error;
-    };
-
     button.onclick = () => {
       status.textContent = "Listening...";
-      console.log("🎧 Button clicked, starting recognition...");
-      bootSound.play().catch(() => console.log("🔇 Autoplay blocked"));
+      bootSound.play().catch(() => console.log("🔇 Boot sound blocked"));
       recognition.start();
     };
 
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript.toLowerCase();
-      console.log("🗣️ Heard:", transcript);
       status.textContent = `Heard: "${transcript}"`;
       const url = phrases[transcript];
       if (url) {
-        status.textContent = `Launching: ${transcript}`;
-        setTimeout(() => window.location.href = url, 1000);
+        jarvisSounds[transcript].play();
+        setTimeout(() => {
+          window.location.href = url;
+        }, 1000);
       } else {
-        status.textContent = "❌ Access Denied!";
         failSound.play();
+        jarvisSounds["unauthorized"].play();
+        status.textContent = "❌ Access Denied.";
       }
+    };
+
+    recognition.onerror = (event) => {
+      status.textContent = `Error: ${event.error}`;
     };
   </script>
 </body>
