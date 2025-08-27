@@ -1,149 +1,165 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>J.A.R.V.I.S. Voice Launcher</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math Education Resources</title>
   <style>
-    :root {
-      --bg-color: radial-gradient(#0d0d0d, #000000);
-      --text-color: #ff0033;
-      --shadow-color: #ff0033;
-      --btn-border: #ff0033;
-      --pulse-glow: rgba(255, 0, 51, 0.1);
-    }body {
-  margin: 0;
-  background: var(--bg-color);
-  color: var(--text-color);
-  font-family: 'Segoe UI', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  overflow: hidden;
-  transition: all 0.5s ease;
-}
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #ddd;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
 
-h1 {
-  font-size: 2.5em;
-  text-shadow: 0 0 10px var(--shadow-color), 0 0 20px var(--shadow-color);
-  animation: flicker 1.5s infinite alternate;
-  text-align: center;
-}
+    header {
+      background-color: #222;
+      padding: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
 
-@keyframes flicker {
-  0% { opacity: 1; }
-  50% { opacity: 0.85; text-shadow: 0 0 5px var(--shadow-color); }
-  100% { opacity: 1; text-shadow: 0 0 20px var(--shadow-color); }
-}
+    header h1 {
+      margin: 0;
+      color: #f55;
+      font-size: 24px;
+    }
 
-#listenBtn {
-  background: transparent;
-  border: 4px solid var(--btn-border);
-  border-radius: 50%;
-  color: var(--btn-border);
-  width: 130px;
-  height: 130px;
-  font-size: 1.1em;
-  position: relative;
-  cursor: pointer;
-  box-shadow: 0 0 20px var(--shadow-color);
-  transition: all 0.5s ease;
-}
+    .game-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
 
-#listenBtn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 150px;
-  height: 150px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: var(--pulse-glow);
-  box-shadow: 0 0 30px var(--shadow-color);
-  animation: pulse 2s infinite;
-  z-index: -1;
-}
+    .game-card {
+      background: #1c1c1c;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
 
-@keyframes pulse {
-  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.2; }
-  100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-}
+    .game-card h2 {
+      margin-bottom: 10px;
+      font-size: 18px;
+      color: #ff6666;
+    }
 
-#status {
-  margin-top: 20px;
-  color: #aaa;
-  font-size: 1em;
-}
+    .responsive-iframe-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+    }
 
+    .responsive-iframe-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 6px 10px;
+      background: #ff4444;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #ff6666;
+    }
+
+    footer {
+      padding: 10px;
+      background: #111;
+      color: #666;
+      font-size: 12px;
+    }
   </style>
 </head>
 <body>
-  <h1>🎙️ J.A.R.V.I.S. Launcher</h1>
-  <button id="listenBtn">Speak</button>
-  <div id="status">Awaiting Command...</div>  <!-- Sound Effects --><audio id="failSound" src="https://www.orangefreesounds.com/wp-content/uploads/2014/08/Price-is-right-losing-horn.mp3" preload="auto"></audio> <audio id="bootSound" src="https://assets.mixkit.co/sfx/preview/mixkit-robotic-power-up-948.mp3" preload="auto"></audio>
+  <header>
+    <h1>Math Education Resources</h1>
+    <p>Interactive Tools &amp; Activities</p>
+  </header>
+
+  <div class="game-container">
+    <!-- Drive Mad Clone -->
+    <div class="game-card">
+      <h2>Drive Mad</h2>
+      <div class="responsive-iframe-container">
+        <iframe src="https://openprocessing.org/sketch/2532343/embed/"></iframe>
+      </div>
+      <div class="btn-container">
+        <button class="btn" onclick="openFullscreen(this)">Play in Browser</button>
+        <a href="https://openprocessing.org/sketch/2532343/" target="_blank">
+          <button class="btn">Go to Site</button>
+        </a>
+      </div>
+    </div>
+
+    <!-- Space Huggers -->
+    <div class="game-card">
+      <h2>Space Huggers</h2>
+      <div class="responsive-iframe-container">
+        <iframe src="https://openprocessing.org/sketch/2093028/embed/"></iframe>
+      </div>
+      <div class="btn-container">
+        <button class="btn" onclick="openFullscreen(this)">Play in Browser</button>
+        <a href="https://openprocessing.org/sketch/2093028/" target="_blank">
+          <button class="btn">Go to Site</button>
+        </a>
+      </div>
+    </div>
+
+    <!-- Infinite Craft -->
+    <div class="game-card">
+      <h2>Infinite Craft</h2>
+      <div class="btn-container">
+        <a href="https://neal.fun/infinite-craft/" target="_blank">
+          <button class="btn">Go to Site</button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Math Education Resources</p>
+  </footer>
 
   <script>
-    const phrases = {
-      "engage protocol 42": "https://music.apple.com/us/playlist/playlist-1/pl.u-MDAWkl3FA5BMdk9?ls",
-      "activate house party protocol": "https://music.apple.com/us/playlist/1900s-2000s/pl.u-yZyVE3rtdMvKo12?ls",
-      "bring the noise": "https://music.apple.com/us/playlist/favorites/pl.u-XkD0vlRf2pGPJyk?ls"
-    };
+    function openFullscreen(button) {
+      let iframe = button.parentElement.previousElementSibling.querySelector('iframe');
+      if (!iframe) return;
 
-    const button = document.getElementById("listenBtn");
-    const status = document.getElementById("status");
-    const failSound = document.getElementById("failSound");
-    const bootSound = document.getElementById("bootSound");
-
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    recognition.lang = "en-US";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    button.onclick = () => {
-      status.textContent = "Listening...";
-      bootSound.play().catch(() => console.log("🔇 Boot sound blocked"));
-      recognition.start();
-    };
-
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript.toLowerCase();
-      status.textContent = `Heard: "${transcript}"`;
-      if (phrases[transcript]) {
-        setTimeout(() => window.location.href = phrases[transcript], 500);
-      } else if (transcript.includes("bravo six") || transcript.includes("going dark")) {
-        setDarkMode();
-        status.textContent = "⚫ Dark mode engaged.";
-      } else if (transcript.includes("let there be light")) {
-        setLightMode();
-        status.textContent = "🔵 Light mode engaged.";
-      } else {
-        failSound.play();
-        status.textContent = "❌ Access Denied.";
+      if (iframe.requestFullscreen) {
+        iframe.requestFullscreen();
+      } else if (iframe.mozRequestFullScreen) {
+        iframe.mozRequestFullScreen();
+      } else if (iframe.webkitRequestFullscreen) {
+        iframe.webkitRequestFullscreen();
+      } else if (iframe.msRequestFullscreen) {
+        iframe.msRequestFullscreen();
       }
-    };
 
-    recognition.onerror = (event) => {
-      status.textContent = `Error: ${event.error}`;
-    };
-
-    function setDarkMode() {
-      document.documentElement.style.setProperty('--bg-color', 'radial-gradient(#0d0d0d, #000000)');
-      document.documentElement.style.setProperty('--text-color', '#ff0033');
-      document.documentElement.style.setProperty('--shadow-color', '#ff0033');
-      document.documentElement.style.setProperty('--btn-border', '#ff0033');
-      document.documentElement.style.setProperty('--pulse-glow', 'rgba(255, 0, 51, 0.1)');
+      // Optional: Scroll to top for mobile fullscreen
+      window.scrollTo(0,0);
     }
-
-    function setLightMode() {
-      document.documentElement.style.setProperty('--bg-color', 'radial-gradient(#ffffff, #e0e0e0)');
-      document.documentElement.style.setProperty('--text-color', '#007bff');
-      document.documentElement.style.setProperty('--shadow-color', '#007bff');
-      document.documentElement.style.setProperty('--btn-border', '#007bff');
-      document.documentElement.style.setProperty('--pulse-glow', 'rgba(0, 123, 255, 0.1)');
-    }
-  </script></body>
+  </script>
+</body>
 </html>
